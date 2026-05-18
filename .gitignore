@@ -21,3 +21,29 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+
+### Common ###
+# Dependencies
+node_modules/
+.npm/
+.yarn/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+*.log
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
