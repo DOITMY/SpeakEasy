@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Pro - 欢迎来到空间计算时代</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --apple-bg: #000;
+            --apple-text: #f5f5f7;
+            --apple-gray: #86868b;
+            --apple-blue: #2997ff;
+            --apple-dark-gray: #1d1d1f;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--apple-bg);
+            color: var(--apple-text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 44px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            padding: 0 20px;
+        }
+
+        .nav-content a {
+            color: var(--apple-text);
+            text-decoration: none;
+            font-size: 12px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-content a:hover {
+            opacity: 1;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            opacity: 1 !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 160px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge {
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--apple-text);
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            background: linear-gradient(180deg, #fff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(21px, 3vw, 32px);
+            font-weight: 400;
+            color: var(--apple-gray);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 980px;
+            font-size: 17px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--apple-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0077ed;
+        }
+
+        .btn-link {
+            color: var(--apple-blue);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-link::after {
+            content: '>';
+            font-size: 14px;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .hero-visual {
+            margin-top: 60px;
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 16/9;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #000 70%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.8s forwards;
+            overflow: hidden;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(41, 151, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .hero-visual-text {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            z-index: 2;
+            background: linear-gradient(135deg, #fff 0%, #2997ff 50%, #fff 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        /* Sections */
+        .section {
+            padding: 120px 20px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-light {
+            background: #f5f5f7;
+            color: var(--apple-dark-gray);
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .section-light .section-subtitle {
+            color: #6e6e73;
+        }
+
+        .section h2 {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: clamp(18px, 2.5vw, 28px);
+            color: var(--apple-gray);
+            margin-bottom: 60px;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Feature Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--apple-dark-gray);
+            border-radius: 24px;
+            padding: 60px 30px;
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .section-light .card {
+            background: white;
+            color: var(--apple-dark-gray);
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2997ff, #5856d6);
+            border-radius: 16px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .card h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .card p {
+            font-size: 17px;
+            color: var(--apple-gray);
+            line-height: 1.5;
+        }
+
+        .section-light .card p {
+            color: #6e6e73;
+        }
+
+        /* Showcase */
+        .showcase {
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
+        }
+
+        .showcase-content {
+            text-align: center;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        .showcase h2 {
+            font-size: clamp(40px, 6vw, 80px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #fff 0%, #86868b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Parallax circles */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(41, 151, 255, 0.4);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(175, 82, 222, 0.4);
+            bottom: 10%;
+            right: 10%;
+            animation-delay: -4s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: rgba(48, 209, 88, 0.3);
+            top: 50%;
+            left: 50%;
+            animation-delay: -2s;
+        }
+
+        /* Footer */
+        footer {
+            background: #1d1d1f;
+            padding: 40px 20px;
+            text-align: center;
+            color: #86868b;
+            font-size: 12px;
+        }
+
+        footer a {
+            color: #d2d2d7;
+            text-decoration: none;
+            margin: 0 12px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            33% {
+                transform: translate(30px, -30px);
+            }
+            66% {
+                transform: translate(-20px, 20px);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-content {
+                gap: 20px;
+            }
+
+            .nav-content a:not(.logo) {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .hero-visual {
+                margin-top: 40px;
+                border-radius: 16px;
+                margin: 40px 20px 0;
+                width: auto;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                padding: 0 16px;
+            }
+
+            .section {
+                padding: 80px 16px;
+            }
+
+            .showcase {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo">&#63743;</a>
+            <a href="#store">商店</a>
+            <a href="#mac">Mac</a>
+            <a href="#ipad">iPad</a>
+            <a href="#iphone">iPhone</a>
+            <a href="#watch">Watch</a>
+            <a href="#vision">Vision</a>
+            <a href="#support">支持</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">全新登场</div>
+        <h1>Vision Pro</h1>
+        <p class="hero-subtitle">空间计算时代，由此开启。</p>
+        <div class="hero-cta">
+            <a href="#" class="btn btn-primary">进一步了解</a>
+            <a href="#" class="btn btn-link">购买</a>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-visual-text">visionOS</div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section-light">
+        <div class="section">
+            <h2>超乎想象的体验。</h2>
+            <p class="section-subtitle">将数字内容无缝融入你的物理空间，
+                以前所未有的方式沉浸其中。</p>
+        </div>
+        <div class="grid">
+            <div class="card fade-in">
+                <div class="card-icon">&#129504;</div>
+                <h3>空间计算</h3>
+                <p>你的房间变成无限画布，应用、游戏和内容随处可放，随心所欲。</p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon">&#128247;</div>
+                <h3>超凡显示</h3>
+                <p>超高分辨率 micro-OLED 系统将 2300 万像素置于双眼前，震撼沉浸。</p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon">&#127911;</div>
+                <h3>空间音频</h3>
+                <p>双驱动单元音频仓带来个性化空间音频，声音仿佛从四面八方涌来。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Section -->
+    <section class="showcase">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="showcase-content fade-in">
+            <h2>这不仅是看见未来。<br>这是置身其中。</h2>
+            <a href="#" class="btn btn-primary" style="margin-top: 24px;">观看影片</a>
+        </div>
+    </section>
+
+    <!-- Another Grid Section -->
+    <section style="padding: 120px 20px;">
+        <div class="section" style="padding: 0;">
+            <h2>为你打造的强大科技。</h2>
+            <p class="section-subtitle">每一细节，都经过精心雕琢。</p>
+        </div>
+        <div class="grid">
+            <div class="card fade-in">
+                <div class="card-icon" style="background: linear-gradient(135deg, #ff375f, #ff9500);">&#9889;</div>
+                <h3>M2 + R1</h3>
+                <p>双芯片设计，M2 带来强悍性能，R1 处理 12 毫秒极速传输的实时数据。</p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon" style="background: linear-gradient(135deg, #32ade6, #007aff);">&#128373;</div>
+                <h3>眼动追踪</h3>
+                <p>高精度 LED 和红外摄像头将 invisible light 图案投射到每只眼睛上。</p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon" style="background: linear-gradient(135deg, #30d158, #00c7be);">&#9995;</div>
+                <h3>手势控制</h3>
+                <p>只需动动手指，无需任何控制器，即可直观地操控眼前的一切。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p style="margin-bottom: 16px;">
+            <a href="#">隐私政策</a>
+            <a href="#">使用条款</a>
+            <a href="#">销售政策</a>
+            <a href="#">法律信息</a>
+            <a href="#">网站地图</a>
+        </p>
+        <p>Copyright &copy; 2026 Apple Inc. 保留所有权利。</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Nav background on scroll
+        const nav = document.querySelector('nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                nav.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.8)';
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+
+</body>
+</html>
